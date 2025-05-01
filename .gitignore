@@ -1,7 +1,7 @@
 # Python
 __pycache__/
 *.py[cod]
-*.class
+*$py.class
 *.so
 .Python
 build/
@@ -19,31 +19,50 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Virtual Environment
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Environment
 .env
 .venv
 env/
 venv/
 ENV/
+env.bak/
+venv.bak/
 
-# IDE
-.idea/
+# VS Code
 .vscode/
-*.swp
-*.swo
+*.code-workspace
 
-# Project specific
-data/raw/*
-data/processed/*
-models/prompts/*
-!models/prompts/.gitkeep
-models/templates/*
-!models/templates/.gitkeep
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Jupyter Notebook
+.ipynb_checkpoints
 
 # Logs
+logs/
 *.log
 
-# Local configuration
-config.yaml
-.env
+# Data
+data/*
+!data/.gitkeep
+
+# Specific to this project
+.env.test

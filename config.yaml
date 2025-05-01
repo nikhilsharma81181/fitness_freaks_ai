@@ -1,0 +1,49 @@
+app:
+  name: "Fitness Freaks AI"
+  version: "0.1.0"
+  description: "Fitness Coach AI - An intelligent assistant that helps users manage their fitness journey"
+
+api:
+  prefix: "/api/v1"
+  timeout: 60 #seconds
+
+llm:
+  default_provider: "gemini"  # gemini or groq
+  providers:
+    gemini:
+      default_model: "gemini-1.5-flash"
+      timeout: 60 #seconds
+      temperature: 0.7
+      max_tokens: 2000
+    groq:
+      default_model: "llama3-8b-8192"
+      timeout: 60 #seconds
+      temperature: 0.7
+      max_tokens: 2000
+
+prompts:
+  system_base: |
+    You are a professional fitness coach assistant designed to help users with their fitness journey.
+    You provide personalized advice on workout planning, diet tracking, and fitness progress.
+    Be supportive, motivational, and precise in your responses.
+    Always prioritize safety and proper form when giving exercise advice.
+
+intent:
+  categories:
+    - workout_planning
+    - workout_logging
+    - diet_planning
+    - diet_logging
+    - progress_tracking
+    - general_fitness_advice
+    - workout_session_management
+  threshold: 0.7  # confidence threshold for intent classification
+
+memory:
+  type: "buffer"  # buffer, vector, etc.
+  max_tokens: 4000
+  max_history: 10
+
+logging:
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  level: "INFO"
