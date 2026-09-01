@@ -1,6 +1,26 @@
 # Fitness Coach AI
 
-An intelligent assistant that helps users manage their fitness journey through natural language interactions.
+An LLM-backed coaching API that turns natural-language messages ("log 3 sets of bench at 60kg", "plan a push day") into structured fitness actions. FastAPI, Python 3.13, pluggable between Google Gemini and Groq.
+
+> **Status: early. The core loop works, the agent layer does not exist yet.** Intent classification, prompt construction, and the chat endpoint are implemented and tested. Workout, diet, and progress services are scaffolded directories, not working features. Read [Current state](#current-state) before evaluating.
+
+## Current state
+
+**Implemented**
+
+- `POST /api/v1/chat` end to end, with request and response schemas
+- Intent classifier over 7 fitness categories with a confidence threshold
+- LLM service abstraction with Gemini and Groq providers behind one interface
+- Prompt templates per intent category
+- Config via `config.yaml` plus environment variables
+- Health endpoint and pytest coverage for the API layer
+
+**Not implemented**
+
+- The agent system (`src/core/agents/` is an empty package)
+- Workout, diet, and progress services (`src/services/*` are scaffolds)
+- Database persistence (`src/db/` is a scaffold)
+- Conversation memory beyond the configured buffer
 
 ## Project Overview
 
@@ -19,6 +39,20 @@ The system architecture consists of two main components:
 1. **Python AI Backend** (this repository): Handles all AI-related functionality including natural language processing, intent recognition, and AI agent orchestration
 2. **Node.js Backend** (separate repository): Manages database operations, user authentication, and serves as the API for the iOS client application
 
+## Stack
+
+| Concern | Choice |
+|---|---|
+| API | FastAPI, Uvicorn |
+| LLM orchestration | LangChain |
+| Providers | Google Gemini (`gemini-1.5-flash`), Groq (`llama3-8b-8192`) |
+| Validation | Pydantic v2 |
+| Config | `config.yaml` + environment variables |
+| Packaging | uv, Python 3.13 |
+| Tests | pytest, pytest-asyncio, httpx |
+
+Providers sit behind a single `LLMService` interface, so switching between Gemini and Groq is a config change (`llm.default_provider`) rather than a code change.
+
 ## Getting Started
 
 ### Prerequisites
@@ -30,8 +64,8 @@ The system architecture consists of two main components:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/fitness-freaks-ai.git
-cd fitness-freaks-ai
+git clone https://github.com/nikhilsharma81181/fitness_freaks_ai.git
+cd fitness_freaks_ai
 ```
 
 2. Run the setup script:
